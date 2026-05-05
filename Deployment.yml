@@ -3,12 +3,6 @@
   become: yes
 
 - tasks:
-    - name: Git Checkout
-      git:
-        repo: "https://github.com/yukesh-v/Boardgame.git"
-        dest: /home/ubuntu/Boardgame
-        version: main
-
     - name: GitLeaks Check
       shell: |
         gitleaks detect --source . --report-path leaks.html --exit-code 1
