@@ -29,6 +29,9 @@
           -Dsonar.projectKey=Boardgame \
           -Dsonar.sources=. \
           -Dsonar.projectName=Boardgame \
+          -Dsonar.organization=Boardgame \
+          -Dsonar.host.url=http://3.88.2.48:9000 \
+          -Dsonar.token={{ sonar_token }}
 
     - name: Maven Build
       shell: |
