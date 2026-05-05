@@ -5,7 +5,7 @@
   tasks:
     - name: GitLeaks Check
       shell: |
-        gitleaks detect --source . --report-path leaks.html 
+        gitleaks detect --source /var/lib/jenkins/workspace/BoardGame-CI/ --report-path leaks.html 
 
     - name: Maven Compile
       shell: |
