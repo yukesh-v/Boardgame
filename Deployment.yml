@@ -9,7 +9,7 @@
 
     - name: Maven Compile
       shell: |
-        "{{ maven_path }} compile -Dmaven.repo.local=/var/lib/jenkins/.m2/repository"
+        {{ maven_path }} compile -Dmaven.repo.local=/var/lib/jenkins/.m2/repository
       args:
         chdir: /var/lib/jenkins/workspace/BoardGame-CI/
 
