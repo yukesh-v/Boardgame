@@ -25,7 +25,7 @@
 
     - name: SonarQube Scan
       shell: |
-        {{ sonar_scanner }}/bin/sonar-scanner \
+        {{ sonar_scanner }} \
           -Dsonar.projectKey=Boardgame \
           -Dsonar.sources=. \
           -Dsonar.projectName=Boardgame \
