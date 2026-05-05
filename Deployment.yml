@@ -2,7 +2,7 @@
   hosts: localhost
   become: yes
 
-- tasks:
+  tasks:
     - name: GitLeaks Check
       shell: |
         gitleaks detect --source . --report-path leaks.html --exit-code 1
