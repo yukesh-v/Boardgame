@@ -1,6 +1,6 @@
 - name: Deploy Application
   hosts: localhost
-  become: yes
+  become: jenkins
 
   tasks:
     - name: GitLeaks Check
