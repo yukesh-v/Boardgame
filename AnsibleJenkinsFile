@@ -25,7 +25,7 @@ environment{
             steps {
                     withCredentials([usernamePassword(credentialsId: 'docker-hub-creds',
                         usernameVariable: 'DOCKER_USER',
-                        passwordVariable: 'DOCKER_PASS')]) {
+                        passwordVariable: 'DOCKER_PASS'),credentialsId: 'sonar-token', variable: 'sonar-token')]) {
                         ansiblePlaybook(
                             playbook: 'Deployment.yml',
                             extraVars: [
