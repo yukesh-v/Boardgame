@@ -21,7 +21,7 @@ environment{
                 git branch: 'main', url: 'https://github.com/yukesh-v/Boardgame.git'
             }
 
-            stage('Invoke Ansible') {
+         stage('Invoke Ansible') {
             steps {
                     withCredentials([usernamePassword(credentialsId: 'docker-hub-creds',
                         usernameVariable: 'DOCKER_USER',
