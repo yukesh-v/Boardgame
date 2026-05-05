@@ -32,7 +32,7 @@ environment{
                             maven_path: "${MVN_HOME}/bin/mvn",
                             jdk_path: "${JDK_HOME}/bin/java",
                             nodejs_path: "${NodeJS_HOME}/bin/node" 
-                            sonar-scanner: "${SCANNER_HOME}/bin/sonar-scanner"
+                            sonar_scanner: "${SCANNER_HOME}/bin/sonar-scanner"
                             DOCKER_HUB_USERNAME: "${DOCKER_USER}",
                             DOCKER_HUB_PASSWORD: "${DOCKER_PASS}"
                         ]
