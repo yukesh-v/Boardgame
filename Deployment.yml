@@ -15,7 +15,7 @@
 
     - name: Maven Test
       shell: |
-        "{{ maven_path }} test"
+        {{ maven_path }} test
       args:
         chdir: /var/lib/jenkins/workspace/BoardGame-CI/
 
@@ -32,7 +32,7 @@
 
     - name: Maven Build
       shell: |
-        "{{ maven_path }} clean package"
+        {{ maven_path }} clean package
       args:
         chdir: /var/lib/jenkins/workspace/BoardGame-CI/
 
