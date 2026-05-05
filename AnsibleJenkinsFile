@@ -20,7 +20,7 @@ environment{
             steps {
                 git branch: 'main', url: 'https://github.com/yukesh-v/Boardgame.git'
             }
-
+          }
          stage('Invoke Ansible') {
             steps {
                     withCredentials([usernamePassword(credentialsId: 'docker-hub-creds',
@@ -44,4 +44,3 @@ environment{
             }
         }
     }
-}
