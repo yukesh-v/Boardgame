@@ -46,8 +46,8 @@
 
     - name: Docker Login to Docker Hub
       community.docker.docker_login:
-        username: "DOCKER_HUB_USERNAME"
-        password: "DOCKER_HUB_PASSWORD"
+        username: "{{ DOCKER_HUB_USERNAME }}"
+        password: "{{ DOCKER_HUB_PASSWORD }}"
 
     - name: Docker Push to Docker Hub
       shell: |
@@ -55,6 +55,6 @@
 
     - name: Docker Logout from Docker Hub
       community.docker.docker_login:
-        username: "DOCKER_HUB_USERNAME"
-        password: "DOCKER_HUB_PASSWORD"
+        username: "{{ DOCKER_HUB_USERNAME }}"
+        password: "{{ DOCKER_HUB_PASSWORD }}"
         state: absent
