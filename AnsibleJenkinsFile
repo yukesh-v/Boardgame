@@ -1,0 +1,47 @@
+pipeline {
+    agent any
+
+ tools {
+    maven 'maven3'
+    jdk 'jdk17'
+    nodejs 'nodejs23'
+    }
+    
+environment{
+        SCANNER_HOME = tool 'sonarqube-scanner'
+        MVN_HOME = tool 'maven3'
+        JDK_HOME = tool 'jdk17'
+        NodeJS_HOME = tool 'nodejs23'
+
+    }
+
+    stages {
+        stage('Git Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/yukesh-v/Boardgame.git'
+            }
+
+            stage('Invoke Ansible') {
+            steps {
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-creds',
+                        usernameVariable: 'DOCKER_USER',
+                        passwordVariable: 'DOCKER_PASS')]) {
+                        ansiblePlaybook(
+                            playbook: 'Deployment.yml',
+                            extraVars: [
+                            maven_path: "${MVN_HOME}/bin/mvn",
+                            jdk_path: "${JDK_HOME}/bin/java",
+                            nodejs_path: "${NodeJS_HOME}/bin/node" 
+                            sonar-scanner: "${SCANNER_HOME}/bin/sonar-scanner"
+                            DOCKER_HUB_USERNAME: "${DOCKER_USER}",
+                            DOCKER_HUB_PASSWORD: "${DOCKER_PASS}"
+                        ]
+
+                        )
+
+                    }
+                }
+            }
+        }
+    }
+}
