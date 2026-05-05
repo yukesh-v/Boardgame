@@ -6,19 +6,18 @@
     - name: GitLeaks Check
       shell: |
         gitleaks detect --source /var/lib/jenkins/workspace/BoardGame-CI/ --report-path leaks.html 
-      registers: gitleaks_result
+      register: gitleaks_result
 
     - name: GitLeaks found secrets
       debug:
         msg: "{{ gitleaks_result.stdout }}"
-  
 
     - name: Maven Compile
       shell: |
         {{ maven_path }} compile -Dmaven.repo.local=/var/lib/jenkins/.m2/repository
       args:
         chdir: /var/lib/jenkins/workspace/BoardGame-CI/
-      registers: maven_compile_result
+      register: maven_compile_result
 
     - name: maven compile output
       debug:
@@ -29,7 +28,7 @@
         {{ maven_path }} test
       args:
         chdir: /var/lib/jenkins/workspace/BoardGame-CI/
-      registers: maven_test_result
+      register: maven_test_result
 
     - name: maven test output
       debug:
@@ -49,7 +48,7 @@
           -Dsonar.host.url=http://3.88.2.48:9000 \
           -Dsonar.token={{ sonar_token }} \
           -Dsonar.java.binaries=.
-      registers: sonar_scan_result
+      register: sonar_scan_result
 
     - name: SonarQube scan output
       debug:
@@ -60,7 +59,7 @@
         {{ maven_path }} clean package
       args:
         chdir: /var/lib/jenkins/workspace/BoardGame-CI/
-      registers: maven_build_result
+      register: maven_build_result
 
     - name: maven build output
       debug:  
@@ -69,7 +68,7 @@
     - name: Docker Build & Tag
       shell: |
         docker build -t yukesh24/boardgame:latest .
-      registers: docker_build_result
+      register: docker_build_result
 
     - name: docker build output
       debug:
@@ -87,7 +86,7 @@
     - name: Docker Push to Docker Hub
       shell: |
         docker push yukesh24/boardgame:latest 
-      registers: docker_push_result
+      register: docker_push_result
 
     - name: docker push output
       debug:
