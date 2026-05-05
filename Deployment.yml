@@ -10,14 +10,18 @@
     - name: Maven Compile
       shell: |
         {{ maven_path }} compile
+      args:
+        chdir: /var/lib/jenkins/workspace/BoardGame-CI/
 
     - name: Maven Test
       shell: |
         {{ maven_path }} test
+      args:
+        chdir: /var/lib/jenkins/workspace/BoardGame-CI/
 
     - name: Trivy fs Scan
       shell: |
-        trivy fs /home/ubuntu/Boardgame --format table -o trivy-fs-scan.html
+        trivy fs /var/lib/jenkins/workspace/BoardGame-CI/ --format table -o trivy-fs-scan.html
 
     - name: SonarQube Scan
       shell: |
@@ -29,6 +33,8 @@
     - name: Maven Build
       shell: |
         {{ maven_path }} clean package
+      args:
+        chdir: /var/lib/jenkins/workspace/BoardGame-CI/
 
     - name: Docker Build & Tag
       shell: |
