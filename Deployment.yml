@@ -6,18 +6,34 @@
     - name: GitLeaks Check
       shell: |
         gitleaks detect --source /var/lib/jenkins/workspace/BoardGame-CI/ --report-path leaks.html 
+      registers: gitleaks_result
+
+    - name: GitLeaks found secrets
+      debug:
+        msg: "{{ gitleaks_result.stdout }}"
+  
 
     - name: Maven Compile
       shell: |
         {{ maven_path }} compile -Dmaven.repo.local=/var/lib/jenkins/.m2/repository
       args:
         chdir: /var/lib/jenkins/workspace/BoardGame-CI/
+      registers: maven_compile_result
+
+    - name: maven compile output
+      debug:
+        msg: "{{ maven_compile_result.stdout }}"
 
     - name: Maven Test
       shell: |
         {{ maven_path }} test
       args:
         chdir: /var/lib/jenkins/workspace/BoardGame-CI/
+      registers: maven_test_result
+
+    - name: maven test output
+      debug:
+        msg: "{{ maven_test_result.stdout }}"
 
     - name: Trivy fs Scan
       shell: |
@@ -33,16 +49,31 @@
           -Dsonar.host.url=http://3.88.2.48:9000 \
           -Dsonar.token={{ sonar_token }} \
           -Dsonar.java.binaries=.
+      registers: sonar_scan_result
+
+    - name: SonarQube scan output
+      debug:
+        msg: "{{ sonar_scan_result.stdout }}"
 
     - name: Maven Build
       shell: |
         {{ maven_path }} clean package
       args:
         chdir: /var/lib/jenkins/workspace/BoardGame-CI/
+      registers: maven_build_result
+
+    - name: maven build output
+      debug:  
+        msg: "{{ maven_build_result.stdout }}"
 
     - name: Docker Build & Tag
       shell: |
         docker build -t yukesh24/boardgame:latest .
+      registers: docker_build_result
+
+    - name: docker build output
+      debug:
+        msg: "{{ docker_build_result.stdout }}"
 
     - name: Trivy Image Scan
       shell: |
@@ -56,6 +87,11 @@
     - name: Docker Push to Docker Hub
       shell: |
         docker push yukesh24/boardgame:latest 
+      registers: docker_push_result
+
+    - name: docker push output
+      debug:
+        msg: "{{ docker_push_result.stdout }}"
 
     - name: Docker Logout from Docker Hub
       community.docker.docker_login:
